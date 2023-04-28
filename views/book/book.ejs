@@ -1,0 +1,21 @@
+<h1><%=kind%></h1>
+<%if(kind==='BestSeller'){%><p style="font-size:50%">*판매횟수 기준입니다.</p><%}%>
+<table class="table">
+<%
+    var i = 0;
+    while(i < results.length) {
+%>
+        <tr><%if(kind==='BestSeller'){%><td><%=i+1%>위</td><%}%>
+            <td><img src="/images/<%=results[i].img%>" style="width:66px;height:100px; "></td>
+            <td><a href="/book_detail/<%=results[i].id%>"><%=results[i].name%></a></td>
+                                    <!-- ^ 요 부분이 prj-main의 bId가 되고 그게 book.js로 넘어감 -->
+            <td><%=results[i].author%></td>
+            <td><%=results[i].price%>원</td>
+        </tr>
+<% 
+        i++;
+    }
+%>
+    
+
+</table>

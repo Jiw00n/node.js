@@ -1,0 +1,25 @@
+<h1>사용자 목록</h1>
+<table class="table table-sm table-bordered" style="width : 600px">
+    <%
+        var i = 0;
+        while(i < results.length) {
+    %>
+        <tr><th>name</th>
+            <th>address</th>
+            <th>tel</th>
+            <th>birth</th>
+            <th>class</th>
+            <th>grade</th>
+        </tr>
+        <tr>
+            <td class="td td-sm"><%=results[i].name%></td>
+            <td class="td td-sm"><%=results[i].address%></td>
+            <td class="td td-sm"><%=results[i].tel%></td>
+            <td class="td td-sm"><%=results[i].birth%></td>
+            <td class="td td-sm"><%=results[i].cls%></td>
+            <td class="td td-sm"><%=results[i].grade%></td></tr>
+    <% 
+        i++;
+    }
+    %>
+</table>

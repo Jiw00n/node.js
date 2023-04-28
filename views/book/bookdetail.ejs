@@ -1,0 +1,27 @@
+<h1>  책 상세  </h1>
+<form>
+<table class="table">
+<tr><td colspan="2"><img src="/images/<%=results[0].img%>" style="width: 200px;height:300px; "></td></tr>
+<tr><td><%=results[0].name%></td><td>저자 : <%=results[0].author%></td></tr>
+<tr><td><%=results[0].price%>원</td><% if(loggined == true) { %><td>수량 : <input type="text" name="qty"></td><%}%></tr>
+
+<tr><td>
+              <button type="submit" formaction = "/book/cart_process"  formmethod="post">장바구니</button>
+              <input type="hidden" name = "custid" value="<%=id%>" >
+              <input type="hidden" name = "bookid" value="<%=results[0].id%>" >  
+       </td>
+       <td>
+              <input name="img" type = "hidden" value="<%=results[0].img%>">
+              <input name="name" type = "hidden" value="<%=results[0].name%>">
+              <input name="author" type = "hidden" value="<%=results[0].author%>">
+              <input name="price" type = "hidden" value="<%=results[0].price%>">
+              <input name="stock" type = "hidden" value="<%=results[0].stock%>">
+              <button type="submit" formaction = "/book/purchase" formmethod="post">구매</button>
+       </td>
+</tr>
+
+</table>
+
+
+
+</form>

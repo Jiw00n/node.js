@@ -1,0 +1,21 @@
+<h1>Book  </h1>
+<table class="table">
+<%
+    var i = 0;
+    while(i < results.length) {
+%>
+        <tr><td><img src="/images/<%=results[i].img%>" style="width:66px;height:100px; "></td>
+            <td><a href="/book/bookdetail/<%=results[i].id%>"><%=results[i].name%></a></td>
+            <td><%=results[i].author%></td>
+            <td><%=results[i].price%>원</td>
+            <td><a href="/book/update/<%=results[i].id%>">update</a></td>
+                                <!-- ^ 요게 bId가 되고 prj-main갔다가 book.js로 넘어가서 다른 함수에서 request.params.bId가 되는 것임 -->
+            <td><a href="/book/delete_process/<%=results[i].id%>">delete</a></td>
+        </tr>
+<% 
+        i++;
+    }
+%>
+    
+
+</table>

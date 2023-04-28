@@ -1,0 +1,48 @@
+
+<h1>Cart</h1>
+<%if(loggined!=true){%>
+    <script>
+        alert('로그인이 필요합니다.')
+        document.location.href="/login"
+    </script><%}%>
+    <table class="table">
+        <tr><td></td>
+            <td>책 이름</a></td>
+            <td>저자</td>
+            <td>가격</td>
+            <td>수량</td>
+            <td></td>
+            <td></td>
+        </tr>
+    <%
+        var i = 0;
+        var stock_alert
+        while(i < results.length) {
+            if(parseInt(results[i].qty)>parseInt(results[i].stock)){
+                results[i].qty = results[i].stock
+                stock_alert = "*남은 재고 : " + results[i].stock
+            }else{stock_alert=""}
+            if(results[i].qty<=0){results[i].qty = 1}
+            
+    %>
+    <form>
+            <tr><input name="bookid" type = "hidden" value="<%=results[i].id%>">
+                <td><input name="img" type = "hidden" value="<%=results[i].img%>"><img src="/images/<%=results[i].img%>" style="width:66px;height:100px; "></td>
+                <td><input name="name" type = "hidden" value="<%=results[i].name%>"><%=results[i].name%></td>
+                <td><input name="author" type = "hidden" value="<%=results[i].author%>"><%=results[i].author%></td>
+                <td><input name="price" type = "hidden" value="<%=results[i].price%>"><%=results[i].price%>원</td>
+                <td><input type="number" style="width:40px;" name="qty" value="<%=results[i].qty%>"> <button type="submit" formaction = "/book/cart/update/<%=results[i].cartid%>"  formmethod="post" >수정</button>
+                <br><%=stock_alert%></td>
+                <td><button type="submit" formaction = "/book/purchase" formmethod="post">구매</button></td>
+                <td><a href="/book/cart/delete/<%=results[i].cartid%>"><input type="button" value="삭제"></a></td>
+            </tr>
+            <input name="cartid" type="hidden" value="<%=results[i].cartid%>">
+            <input name="stock" type="hidden" value="<%=results[i].stock%>">
+        </form>
+
+    <% 
+            i++;
+        }
+    %>
+        
+    </table>

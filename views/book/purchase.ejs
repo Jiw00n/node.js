@@ -1,0 +1,101 @@
+<%if(loggined!=true){%>
+    <script>
+        alert('로그인이 필요합니다.')
+        document.location.href="/login"
+    </script>
+    <%}%>
+
+<h1> 구매이력 </h1>
+    <table class="table">
+    
+            <tr><td>사진</td>
+                <td>책 이름</td>
+                <td>저자</td>
+                <td>구매금액</td>
+                <td>적립포인트</td>
+                <td>수량</td>
+                <td>취소여부</td>
+                <td>환불여부</td>
+                <td>구입날짜</td>
+                <td></td>
+            </tr>
+    <%
+        var pt = 0
+        var i = 0;
+        while(i < results.length) {
+    %>
+            <tr><td><img src="/images/<%=results[i].img%>" style="width:66px;height:100px; "></td>
+                <td><%=results[i].name%></a></td>
+                <td><%=results[i].author%></td>
+                <td><%=results[i].price*results[i].qty%>원</td>
+                <td><%=results[i].point%>p</td>
+                <td><%=results[i].qty%>권</td>
+                <td><%if(results[i].cancel=='Y'){%>취소완료<%}else{%>N<%}%></td>
+                <td><%if(results[i].refund=='Y'){%>환불완료<%}else{%>N<%}%></td>
+                <td><%=results[i].purchasedate%></td>
+                <td><%if(results[i].cancel=='N'){%><a href="/book/purchase/cancel/<%=results[i].purchaseid%>"><input type="button" value="취소"></a><%}%></td>
+                <%
+                pt = pt + results[i].point%>
+            </tr>
+    <% 
+            i++;
+        }
+    %>
+    </table>
+    <p style="text-align: right;">총 적립 포인트 : <%=pt%>p</p>
+    <hr>
+
+    <%if(kind=='P'){
+        if(parseInt(pbook.qty)>parseInt(pbook.stock)){%>
+            <script>alert('재고가 부족합니다.\n*재고 수량 : <%=pbook.stock%>');document.location.href="/book_detail/<%=pbook.bookid%>"</script><%
+        }else if(pbook.qty<=0){%>
+            <script>alert('수량을 확인해주세요.');document.location.href="/book_detail/<%=pbook.bookid%>"</script>
+        <%}
+    %>
+
+
+    <br>
+    <h3>구매</h3>
+    <form>
+    <table class="table">
+        <tr>
+            <td></td>
+            <td>책 이름</td>
+            <td>저자</td>
+            <td>가격</td>            
+            <td>수량</td>
+
+        </tr>
+        <tr>
+            <td><img src="/images/<%=pbook.img%>" style="width: 66px;height:100px; "></td>
+            <td><%=pbook.name%></td>
+            <td><%=pbook.author%></td>
+            <td><%=pbook.price*pbook.qty%>원</td>
+            <td><%=pbook.qty%>권</td>
+
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="4">주소지 : <input type="text" name="address"  style="width: 600px"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="width: 300px">책 가격 : <%=pbook.price*pbook.qty%><br>
+                배송비 : <%if (pbook.price*pbook.qty<30000){ ship=3000%>3000원<%}else{ ship=0 %>무료<%}%>
+                <br>총 결제액 : <%=pbook.price*pbook.qty+ship%>원
+                <br>적립 예정 포인트 : <%=pbook.price*pbook.qty*0.1%>p</td>
+            <td><button type="submit" formaction = "/book/purchase_process" formmethod="post">구매</button></td>
+        </tr>
+
+        <input type="hidden" name = "custid" value="<%=id%>" >
+        <input type="hidden" name = "bookid" value="<%=pbook.bookid%>" >
+        <input type="hidden" name = "price" value="<%=pbook.price%>" >
+        <input type="hidden" name = "qty" value="<%=pbook.qty%>" >
+        <input type="hidden" name = "stock" value="<%=pbook.stock%>">
+        <input type="hidden" name = "cartid" value="<%=pbook.cartid%>">
+    </table>
+    
+    </form>
+    <%}%>
